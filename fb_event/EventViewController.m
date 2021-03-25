@@ -37,13 +37,14 @@
     }
     
     // Configure the cell.
-    cell.textLabel.text = @"test";
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.textLabel.text = [self.evModel eventAtIndex:indexPath.row section:indexPath.section] ;
+
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    int rowsCount = [self.evModel numberOfDateInSection: section];
-    NSLog(@"in section %d %d",section, rowsCount);
     return [self.evModel numberOfDateInSection: section];
 }
 

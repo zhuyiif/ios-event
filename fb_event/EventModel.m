@@ -33,20 +33,20 @@
     for (int i = 0; i < self.eventArray.count; i++) {
         NSMutableDictionary *item = [[self.eventArray objectAtIndex:i] mutableCopy];
         NSString *startStr = [item objectForKey:@"start"];
-        [item setValue:[startStr eventDate] forKey:@"start"];
+        [item setValue:[startStr eventDate] forKey:@"start_date"];
         
         NSString *endStr = [item objectForKey:@"end"];
-        [item setValue:[endStr eventDate] forKey:@"end"];
+        [item setValue:[endStr eventDate] forKey:@"end_date"];
         self.eventArray[i] = item;
     }
     
     // sort by start date
-    NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:YES];
+    NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"start_date" ascending:YES];
     self.eventArray = [[self.eventArray sortedArrayUsingDescriptors:@[descriptor]] mutableCopy];
     
     for (int i = 0; i < self.eventArray.count; i++) {
         NSDictionary *item = [self.eventArray objectAtIndex:i] ;
-        NSDate *startDate = [item objectForKey:@"start"];
+        NSDate *startDate = [item objectForKey:@"start_date"];
         NSLog(@"after sort start = %@",startDate);
     }
     
@@ -57,10 +57,10 @@
     
     for (int i = 1; i < self.eventArray.count; i++) {
         NSDictionary *item = [self.eventArray objectAtIndex:i] ;
-        NSDate *startDate = [item objectForKey:@"start"];
+        NSDate *startDate = [item objectForKey:@"start_date"];
         
         NSDictionary *preItem = [self.eventArray objectAtIndex:i - 1] ;
-        NSDate *preStartDate = [preItem objectForKey:@"start"];
+        NSDate *preStartDate = [preItem objectForKey:@"start_date"];
         
         NSLog(@"%@ %@", startDate, preStartDate);
         
@@ -82,6 +82,19 @@
     
 }
 
+
+// for display
+-(NSString *) eventAtIndex:(NSInteger) index section:(NSInteger)sec {
+    NSArray *array = [self.eventGroupByDayArray objectAtIndex:sec];
+    NSDictionary *item = [array objectAtIndex:index] ;
+    NSString *start = [item objectForKey:@"start"];
+    NSString *end = [item objectForKey:@"end"];
+    NSString *title = [item objectForKey:@"title"];
+    
+    NSString *display = [NSString stringWithFormat:@"start = %@ \r\n end = %@ \r\n %@",start,end,title];
+    return display;
+}
+
 -(NSInteger) numberOfSections {
     return self.eventGroupByDayArray.count;
 }
@@ -94,7 +107,7 @@
 -(NSString *) sectionHeader:(NSInteger) section {
     NSArray *array = [self.eventGroupByDayArray objectAtIndex:section];
     NSDictionary *event = [array firstObject];
-    NSDate* startDate =  [event objectForKey:@"start"] ;
+    NSDate* startDate =  [event objectForKey:@"start_date"] ;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM d"];
     NSString *strDate = [dateFormatter stringFromDate:startDate];
