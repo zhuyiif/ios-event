@@ -9,11 +9,8 @@
 #import "NSString+Helpers.h"
 
 @interface EventModel ()
-
 @property (strong, nonatomic) NSMutableArray * eventArray;
-
 @property (strong, nonatomic) NSMutableArray * eventGroupByDayArray;
-
 @end
 
 @implementation EventModel
@@ -44,38 +41,45 @@
     NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"start_date" ascending:YES];
     self.eventArray = [[self.eventArray sortedArrayUsingDescriptors:@[descriptor]] mutableCopy];
     
-    for (int i = 0; i < self.eventArray.count; i++) {
-        NSDictionary *item = [self.eventArray objectAtIndex:i] ;
-        NSDate *startDate = [item objectForKey:@"start_date"];
-    }
-    
-    // group by day
+    // group by day and check if conflict with previous most recent end date
+    NSDate *preMostRecentEndDate;
     NSMutableArray *groupArray = [[NSMutableArray alloc] init];
     [groupArray addObject:[self.eventArray objectAtIndex:0]];
     [self.eventGroupByDayArray addObject:groupArray];
+    preMostRecentEndDate =[[self.eventArray objectAtIndex:0] objectForKey:@"end_date"];
     
     for (int i = 1; i < self.eventArray.count; i++) {
-        NSDictionary *item = [self.eventArray objectAtIndex:i] ;
+        NSMutableDictionary *item = [self.eventArray objectAtIndex:i] ;
         NSDate *startDate = [item objectForKey:@"start_date"];
-        
-        NSDictionary *preItem = [self.eventArray objectAtIndex:i - 1] ;
+        NSDate *endDate = [item objectForKey:@"end_date"];
+        // compare with previouse start date ,put into same array if it's same day
+        NSMutableDictionary *preItem = [self.eventArray objectAtIndex:i - 1] ;
         NSDate *preStartDate = [preItem objectForKey:@"start_date"];
         
+        //check previous most recent end date
         if([[NSCalendar currentCalendar] isDate:startDate inSameDayAsDate:preStartDate]) {
+            NSComparisonResult dateComRes = [startDate compare:preMostRecentEndDate];
+            if(dateComRes == NSOrderedAscending) {
+                // conflict
+                [item setObject:@"true" forKey:@"conflict"];
+                [preItem setObject:@"true" forKey:@"conflict"];
+            }
             [groupArray addObject:item];
-           
+            // check current enddate with most recent end date
+            NSComparisonResult endDateComRes = [endDate compare:preMostRecentEndDate];
+            if(endDateComRes != NSOrderedAscending) {
+                //update preMostRecentEndDate
+                preMostRecentEndDate = endDate;
+            }
         }
         else {
-            // create a new array
+            //if it's different date, create a new array
             groupArray = [[NSMutableArray alloc] init];
             [groupArray addObject:item];
             [self.eventGroupByDayArray addObject:groupArray];
+            preMostRecentEndDate = endDate;
         }
     }
-    
-    
-    
-    
 }
 
 
@@ -89,6 +93,15 @@
     
     NSString *display = [NSString stringWithFormat:@"start = %@ \r\n end = %@ \r\n %@",start,end,title];
     return display;
+}
+
+-(BOOL) eventConflictAtIndex:(NSInteger) index section:(NSInteger)sec {
+    NSArray *array = [self.eventGroupByDayArray objectAtIndex:sec];
+    NSDictionary *item = [array objectAtIndex:index] ;
+    if ([item objectForKey:@"conflict"] == nil) {
+        return false;
+    }
+    return true;
 }
 
 -(NSInteger) numberOfSections {

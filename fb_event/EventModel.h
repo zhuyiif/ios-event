@@ -12,6 +12,7 @@
 @interface EventModel : NSObject
 -(void) loadJson;
 -(NSString *) eventAtIndex:(NSInteger) index section:(NSInteger)sec;
+-(BOOL) eventConflictAtIndex:(NSInteger) index section:(NSInteger)sec;
 -(NSInteger) numberOfSections;
 -(NSInteger) numberOfDateInSection:(NSInteger) section;
 -(NSString *) sectionHeader:(NSInteger) section;

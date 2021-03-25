@@ -36,6 +36,14 @@
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.evModel eventAtIndex:indexPath.row section:indexPath.section] ;
+    
+    // if conflict with other event ,background color will be red
+    if ([self.evModel eventConflictAtIndex:indexPath.row section:indexPath.section]) {
+        cell.backgroundColor = [UIColor redColor];
+    }
+    else {
+        cell.backgroundColor = [UIColor whiteColor];
+    }
 
     return cell;
 }
