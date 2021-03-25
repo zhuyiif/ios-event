@@ -12,9 +12,17 @@
 
 @property (strong, nonatomic) NSMutableArray * eventArray;
 
+@property (strong, nonatomic) NSMutableArray * eventGroupByDayArray;
+
 @end
 
 @implementation EventModel
+
+- (instancetype)init {
+    self = [super init];
+    self.eventGroupByDayArray = [[NSMutableArray alloc] init];
+    return self;
+}
 
 -(void) loadJson {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"mock" ofType:@"json"];
@@ -42,12 +50,55 @@
         NSLog(@"after sort start = %@",startDate);
     }
     
-    // group by day 
-   
+    // group by day
+    NSMutableArray *groupArray = [[NSMutableArray alloc] init];
+    [groupArray addObject:[self.eventArray objectAtIndex:0]];
+    [self.eventGroupByDayArray addObject:groupArray];
+    
+    for (int i = 1; i < self.eventArray.count; i++) {
+        NSDictionary *item = [self.eventArray objectAtIndex:i] ;
+        NSDate *startDate = [item objectForKey:@"start"];
+        
+        NSDictionary *preItem = [self.eventArray objectAtIndex:i - 1] ;
+        NSDate *preStartDate = [preItem objectForKey:@"start"];
+        
+        NSLog(@"%@ %@", startDate, preStartDate);
+        
+        if([[NSCalendar currentCalendar] isDate:startDate inSameDayAsDate:preStartDate]) {
+            [groupArray addObject:item];
+            NSLog(@"same day");
+        }
+        else {
+            NSLog(@"different day");
+            // create a new array
+            groupArray = [[NSMutableArray alloc] init];
+            [groupArray addObject:item];
+            [self.eventGroupByDayArray addObject:groupArray];
+        }
+    }
+    
+    
     
     
 }
 
--(void) sortEventArray {
+-(NSInteger) numberOfSections {
+    return self.eventGroupByDayArray.count;
 }
+
+-(NSInteger) numberOfDateInSection:(NSInteger) section {
+    NSArray *array = [self.eventGroupByDayArray objectAtIndex:section];
+    return array.count;
+}
+
+-(NSString *) sectionHeader:(NSInteger) section {
+    NSArray *array = [self.eventGroupByDayArray objectAtIndex:section];
+    NSDictionary *event = [array firstObject];
+    NSDate* startDate =  [event objectForKey:@"start"] ;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM d"];
+    NSString *strDate = [dateFormatter stringFromDate:startDate];
+    return strDate;
+}
+
 @end

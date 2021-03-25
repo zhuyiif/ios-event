@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		142C3040260B010300C7A870 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C303F260B010300C7A870 /* AppDelegate.m */; };
 		142C3043260B010300C7A870 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C3042260B010300C7A870 /* SceneDelegate.m */; };
-		142C3046260B010300C7A870 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C3045260B010300C7A870 /* ViewController.m */; };
+		142C3046260B010300C7A870 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142C3045260B010300C7A870 /* EventViewController.m */; };
 		142C3049260B010300C7A870 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142C3047260B010300C7A870 /* Main.storyboard */; };
 		142C304B260B010400C7A870 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 142C304A260B010400C7A870 /* Assets.xcassets */; };
 		142C304E260B010400C7A870 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142C304C260B010400C7A870 /* LaunchScreen.storyboard */; };
@@ -44,8 +44,8 @@
 		142C303F260B010300C7A870 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		142C3041260B010300C7A870 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		142C3042260B010300C7A870 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		142C3044260B010300C7A870 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		142C3045260B010300C7A870 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		142C3044260B010300C7A870 /* EventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		142C3045260B010300C7A870 /* EventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		142C3048260B010300C7A870 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		142C304A260B010400C7A870 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		142C304D260B010400C7A870 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -117,8 +117,8 @@
 				142C303F260B010300C7A870 /* AppDelegate.m */,
 				142C3041260B010300C7A870 /* SceneDelegate.h */,
 				142C3042260B010300C7A870 /* SceneDelegate.m */,
-				142C3044260B010300C7A870 /* ViewController.h */,
-				142C3045260B010300C7A870 /* ViewController.m */,
+				142C3044260B010300C7A870 /* EventViewController.h */,
+				142C3045260B010300C7A870 /* EventViewController.m */,
 				142C3047260B010300C7A870 /* Main.storyboard */,
 				142C304A260B010400C7A870 /* Assets.xcassets */,
 				142C304C260B010400C7A870 /* LaunchScreen.storyboard */,
@@ -288,7 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142C3046260B010300C7A870 /* ViewController.m in Sources */,
+				142C3046260B010300C7A870 /* EventViewController.m in Sources */,
 				142C3040260B010300C7A870 /* AppDelegate.m in Sources */,
 				142C3094260C564300C7A870 /* EventModel.m in Sources */,
 				142C3051260B010400C7A870 /* main.m in Sources */,

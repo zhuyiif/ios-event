@@ -11,6 +11,9 @@
 
 @interface EventModel : NSObject
 -(void) loadJson;
+-(NSInteger) numberOfSections;
+-(NSInteger) numberOfDateInSection:(NSInteger) section;
+-(NSString *) sectionHeader:(NSInteger) section;
 @end
 
 #endif /* EventModel_h */
