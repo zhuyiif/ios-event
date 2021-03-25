@@ -47,7 +47,6 @@
     for (int i = 0; i < self.eventArray.count; i++) {
         NSDictionary *item = [self.eventArray objectAtIndex:i] ;
         NSDate *startDate = [item objectForKey:@"start_date"];
-        NSLog(@"after sort start = %@",startDate);
     }
     
     // group by day
@@ -62,14 +61,11 @@
         NSDictionary *preItem = [self.eventArray objectAtIndex:i - 1] ;
         NSDate *preStartDate = [preItem objectForKey:@"start_date"];
         
-        NSLog(@"%@ %@", startDate, preStartDate);
-        
         if([[NSCalendar currentCalendar] isDate:startDate inSameDayAsDate:preStartDate]) {
             [groupArray addObject:item];
-            NSLog(@"same day");
+           
         }
         else {
-            NSLog(@"different day");
             // create a new array
             groupArray = [[NSMutableArray alloc] init];
             [groupArray addObject:item];

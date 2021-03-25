@@ -20,10 +20,6 @@
     // Do any additional setup after loading the view.
     self.evModel = [[EventModel alloc] init];
     [self.evModel loadJson];
-    
-    
-    //sort by startdate
-    
 }
 
 
